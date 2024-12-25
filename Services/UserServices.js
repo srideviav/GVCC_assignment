@@ -17,3 +17,7 @@ exports.ifPasswordMatch = async(userPassword,savedPassword) => {
   const isMatch = await bcrypt.compare(userPassword, savedPassword);
   return isMatch;
 }
+
+exports.getAllUser = async()=>{
+  return await UserModels.find();
+}

@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 exports.verifyToken = (req,res,next)=>{
-    const token = req.header('Authorization')?.replace('Bearer','');
+    const token = req.header('Authorization')?.split(' ')[1];
+
     if(!token){
         return res
         .status(401)
@@ -11,11 +12,12 @@ exports.verifyToken = (req,res,next)=>{
         })
     }
     try {
-        const decoded = jwt.verify(token,process.env,JWT_SECRET);
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
         req.user = decoded ;
         next();
 
     } catch (error) {
-        res.status(401).json({ status: false, message: 'Something Went Wrong' });
+        console.log("jwt err : ", error)
+        res.status(401).json({ status: false, message: 'Something Went Wrong',error:error?.message });
     }
 }

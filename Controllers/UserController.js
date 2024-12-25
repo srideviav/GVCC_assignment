@@ -1,4 +1,4 @@
-const { ifUserExistsService, saveUserService, ifPasswordMatch } = require('../Services/UserSErvices');
+const { ifUserExistsService, saveUserService, ifPasswordMatch, getAllUser } = require('../Services/UserSErvices');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
@@ -41,7 +41,6 @@ exports.loginUser = async (req, res) => {
     const userDetails = req.body;
     try {
         const userExists = await ifUserExistsService(userDetails?.email);
-        console.log(userExists, "is user exists")
         if (!userExists) {
             res.json({
                 status: false,
@@ -51,8 +50,7 @@ exports.loginUser = async (req, res) => {
 
         if (userExists) {
             const passwordMatch = await ifPasswordMatch(userDetails?.password, userExists?.password)
-            console.log(passwordMatch, "is password matches")
-            if (!passwordMatch) {
+             if (!passwordMatch) {
                 res.json({
                     status: false,
                     message: "Incorrect Password",
@@ -79,4 +77,26 @@ exports.loginUser = async (req, res) => {
         });
     }
 
+}
+
+exports.getUser = async (req,res) => {
+    const user = req.user;
+     if(user && user.userType === 'user'){
+        const result = await ifUserExistsService(user?.email);
+         return res.json({
+            status:true,
+            message:"User Details",
+            data : result
+        })
+    }
+    if(user && user.userType === 'admin'){
+        const result = await getAllUser();
+         return res.json({
+            status:true,
+            message:"All User Details",
+            data : result
+        })
+    }
+
+     
 }
