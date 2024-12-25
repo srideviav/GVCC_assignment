@@ -12,3 +12,8 @@ exports.saveUserService = async(userDetails) => {
     const newUser = new UserModels(userDetails);
     return await newUser.save();
 }
+
+exports.ifPasswordMatch = async(userPassword,savedPassword) => {
+  const isMatch = await bcrypt.compare(userPassword, savedPassword);
+  return isMatch;
+}
