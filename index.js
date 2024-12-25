@@ -1,11 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
-
+require('dotenv').config();
+const UserRoutes = require("./Routes/UserRoutes")
 const app = express();
+const DB_URL = process.env.DB_URL; 
+const PORT = process.env.PORT;
 
-const DB_URL='mongodb+srv://srideviav456:Srish2023@cluster0.wnuci.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
- 
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json());
+app.use("/user",UserRoutes);
+
 
 mongoose
   .connect(DB_URL)
@@ -16,11 +20,6 @@ mongoose
     console.error('Error connecting to DB:', err.message);
   });
 
-
-app.get("/",(req,res)=>{
-    res.send("SUCCESS")
-})
-
-app.listen(3003,()=>{
+app.listen(PORT,()=>{
     console.log("Server Started on PORT http://localhost:3003")
 } )
