@@ -1,5 +1,6 @@
 const { ifUserExistsService, saveUserService, ifPasswordMatch } = require('../Services/UserSErvices');
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 exports.registerUser = async (req, res) => {
     const errors = validationResult(req);
@@ -58,9 +59,16 @@ exports.loginUser = async (req, res) => {
                 });
             }
         }
+        const token = jwt.sign(
+            { id: userExists._id, email: userExists.email, userType: userExists.userType }, // Payload
+            process.env.JWT_SECRET, // Secret key (store securely in .env file)
+            { expiresIn: '1h' } // Token expiration
+        );
         res.json({
             status: true,
-            message: "User Login Successfully"
+            message: "User Login Successfully",
+            data:userExists,
+            token:token
         })
     } catch (error) {
         console.error("Error:", error);
