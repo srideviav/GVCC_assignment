@@ -42,42 +42,41 @@ exports.loginUser = async (req, res) => {
     try {
         const userExists = await ifUserExistsService(userDetails?.email);
         if (!userExists) {
-            res.json({
+            return res.json({
                 status: false,
                 message: "Incorrect Email",
             });
         }
-
-        if (userExists) {
-            const passwordMatch = await ifPasswordMatch(userDetails?.password, userExists?.password)
-             if (!passwordMatch) {
-                res.json({
-                    status: false,
-                    message: "Incorrect Password",
-                });
-            }
+        const passwordMatch = await ifPasswordMatch(userDetails?.password, userExists?.password);
+        if (!passwordMatch) {
+            return res.json({
+                status: false,
+                message: "Incorrect Password",
+            });
         }
+
         const token = jwt.sign(
             { id: userExists._id, email: userExists.email, userType: userExists.userType }, // Payload
-            process.env.JWT_SECRET, // Secret key (store securely in .env file)
-            { expiresIn: '1h' } // Token expiration
+            process.env.JWT_SECRET, // Secret key
+            { expiresIn: "1h" } // Token expiration
         );
-        res.json({
+
+        return res.json({
             status: true,
             message: "User Login Successfully",
-            data:userExists,
-            token:token
-        })
+            data: userExists,
+            token: token,
+        });
     } catch (error) {
         console.error("Error:", error);
-        res.json({
+        return res.status(500).json({
             status: false,
             message: "Something Went Wrong",
             error: error.message,
         });
     }
+};
 
-}
 
 exports.getUser = async (req,res) => {
     const user = req.user;
