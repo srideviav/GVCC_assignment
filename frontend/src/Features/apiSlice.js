@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { API_URL } from "../const/endpoints";
+import { API_URL , BASE_URL} from "../const/endpoints";
 
-export const apiSlice = createApi({
-  reducerPath: "api",  
+export const demoApiSlice = createApi({
+  reducerPath: "demoapi",  
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),  
   endpoints: (builder) => ({
     fetchUsers: builder.query({
@@ -11,4 +11,15 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useFetchUsersQuery } = apiSlice;
+export const userApiSlice = createApi({
+  reducerPath: "userapi",  
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),  
+  endpoints: (builder) => ({
+    fetchUsers: builder.query({
+      query: () => "/",  
+    }),
+  }),
+});
+
+export const { useFetchUsersQuery } = userApiSlice;
+ export const { useDemoAPIQuery } = demoApiSlice;

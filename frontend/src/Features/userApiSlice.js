@@ -1,11 +1,9 @@
-import { apiSlice } from "./apiSlice";
-import { BASE_URL } from "../const/endpoints";
-import { API_URL } from "../const/endpoints";
+import { userApiSlice } from "./apiSlice";
 import { REGISTER_URL } from "../const/endpoints";
 import { LOGIN_URL } from "../const/endpoints";
 import { GET_URL } from "../const/endpoints";
 
-export const UsersApiSlice = apiSlice.injectEndpoints({
+export const UsersApiSlice = userApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (registerData) => ({
@@ -21,10 +19,10 @@ export const UsersApiSlice = apiSlice.injectEndpoints({
       },
     }),
     loginUser: builder.mutation({
-        query: (registerData) => ({
+        query: (formData) => ({
           url: LOGIN_URL,
           method: "POST",
-          body: { ...registerData },
+          body: { ...formData },
         }),
         transformErrorResponse: (response) => {
           return response; // You can customize the error response transformation here.
@@ -33,39 +31,26 @@ export const UsersApiSlice = apiSlice.injectEndpoints({
           return response; // You can customize the successful response transformation here.
         },
     }),
-    getUser: builder.mutation({
-        query: (registerData) => ({
-          url: GET_URL,
-          method: "POST",
-          body: { ...registerData },
-        }),
-        transformErrorResponse: (response) => {
-          return response; // You can customize the error response transformation here.
-        },
-        transformResponse: (response) => {
-          return response; // You can customize the successful response transformation here.
-        },
-    }),
-    demoApiUser: builder.query({
+    getUser: builder.query({
         query: () => ({
-          url: API_URL,
+          url: GET_URL,
           method: "GET",
-        }),
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+         }),
         transformErrorResponse: (response) => {
-            console.log("demo api err res :", response)
           return response; // You can customize the error response transformation here.
         },
         transformResponse: (response) => {
-            console.log("demo api success res :", response)
           return response; // You can customize the successful response transformation here.
         },
-      }),
+    }),
   }),
 });
 
 export const {
     useRegisterUserMutation,
     useLoginUserMutation,
-    useGetUserMutation,
-    useDemoApiUserQuery,
-} = UsersApiSlice;
+    useGetUserQuery,
+ } = UsersApiSlice;
