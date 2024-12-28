@@ -21,7 +21,7 @@ Database : Mongodb
 
 - add .env file in below format 
    `
-     BASE_URL= 'http://localhost:3003' // backend url
+     REACT_APP_BASE_URL= 'http://localhost:3003' // backend url
    `
 
 - npm install to install all the dependencies
