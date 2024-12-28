@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:3003";
+export const BASE_URL =  process.env.BASE_URL;
 export const API_URL = "https://jsonplaceholder.typicode.com/users";
 
 export const REGISTER_URL = "/user/register";
