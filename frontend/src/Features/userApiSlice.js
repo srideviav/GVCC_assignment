@@ -20,7 +20,7 @@ export const UsersApiSlice = userApiSlice.injectEndpoints({
     }),
     loginUser: builder.mutation({
         query: (formData) => ({
-          url: BASE_URL + "/user/" + LOGIN_URL,
+          url: LOGIN_URL,
           method: "POST",
           body: { ...formData },
         }),
