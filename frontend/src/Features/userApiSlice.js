@@ -1,5 +1,5 @@
 import { userApiSlice } from "./apiSlice";
-import { REGISTER_URL } from "../const/endpoints";
+import { BASE_URL, REGISTER_URL } from "../const/endpoints";
 import { LOGIN_URL } from "../const/endpoints";
 import { GET_URL } from "../const/endpoints";
 
@@ -20,7 +20,7 @@ export const UsersApiSlice = userApiSlice.injectEndpoints({
     }),
     loginUser: builder.mutation({
         query: (formData) => ({
-          url: LOGIN_URL,
+          url: BASE_URL + "/user/" + LOGIN_URL,
           method: "POST",
           body: { ...formData },
         }),
