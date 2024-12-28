@@ -1,4 +1,4 @@
-const { ifUserExistsService, saveUserService, ifPasswordMatch, getAllUser } = require('../Services/UserSErvices');
+const { ifUserExistsService, saveUserService, ifPasswordMatch, getAllUser } = require('../Services/UserServices');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
