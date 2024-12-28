@@ -9,14 +9,17 @@ import Button from "@mui/material/Button";
 const drawerWidth = 240;
 
 const DashboardLayout = () => {
+    const token = localStorage.getItem("token");
     const navItems = [
         { text: "Home", icon: <DashboardIcon />, link: "/" },
         { text: "Users", icon: <ShoppingCartIcon />, link: "/users" },
         { text: "Reports", icon: <BarChartIcon />, link: "/reports" },
         { text: "Register", icon: <BarChartIcon />, link: "/register" },
-        { text: "Login", icon: <BarChartIcon />, link: "/login" },
-        { text: "Logout", icon: <BarChartIcon />, link: "/logout" },
-    ];
+        ...(token
+          ? [{ text: "Logout", icon: <BarChartIcon />, link: "/logout" }]
+          : [{ text: "Login", icon: <BarChartIcon />, link: "/login" }])
+      ];
+ 
 
     return (
         <Box sx={{ display: "flex" }}>
@@ -24,19 +27,8 @@ const DashboardLayout = () => {
             {/* Top AppBar */}
             <AppBar position="fixed" sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}>
                 <Toolbar>
-                    <Typography variant="h6" noWrap>
-                        Dashboard
-                    </Typography>
-                    <Button
-                        variant="contained"  
-                        color="primary"      
-                        component={Link}    
-                        to="/register"        
-                    >
-                        Register
-                    </Button>
-
-                </Toolbar>
+                    <Typography variant="h6" noWrap />                        
+                 </Toolbar>
             </AppBar>
             <Drawer
                 variant="permanent"

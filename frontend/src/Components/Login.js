@@ -29,6 +29,9 @@ const Login = () => {
       const response = await login(formData).unwrap(); // Call the login mutation
       if (response?.status === true) {
         localStorage.setItem("token", response.token);
+        localStorage.setItem("username", response.data.name);
+        localStorage.setItem("usertype", response.data.userType);
+
         navigate("/"); // Navigate to dashboard or another page
       } else {
         setErrorMessage(response?.message || "Login failed.");
