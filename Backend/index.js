@@ -15,6 +15,9 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 app.use("/user",UserRoutes);
+app.use("/checkgvcc", (req, res)=>{
+  res.send('Hello BE works');
+});
 
 
 mongoose
