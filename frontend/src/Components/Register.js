@@ -10,9 +10,7 @@ import {
     MenuItem,
     Select,
     FormControl,
-    InputLabel,
-    Snackbar,
-    Alert
+    InputLabel
 } from "@mui/material";
 import { useRegisterUserMutation } from "../Features/userApiSlice";
 import { useNavigate, Link } from "react-router-dom";
@@ -70,7 +68,6 @@ const Register = () => {
             } else {
                 setError(response.data.message);
             }
-            setOpenSnackbar(true);
             setFormData({
                 name: "",
                 email: "",
