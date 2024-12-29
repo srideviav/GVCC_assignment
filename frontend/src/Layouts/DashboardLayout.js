@@ -4,7 +4,6 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { Outlet, Link } from "react-router-dom";
-import Button from "@mui/material/Button";
 
 const drawerWidth = 240;
 
@@ -42,7 +41,7 @@ const DashboardLayout = () => {
                 <Box sx={{ overflow: "auto" }}>
                     <List>
                         {navItems.map((item) => (
-                            <ListItem button key={item.text} component={Link} to={item.link}>
+                            <ListItem button="true" key={item.text} component={Link} to={item.link}>
                                 <ListItemIcon>{item.icon}</ListItemIcon>
                                 <ListItemText primary={item.text} />
                             </ListItem>

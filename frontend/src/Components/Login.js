@@ -25,6 +25,13 @@ const Login = () => {
     event.preventDefault();
     setErrorMessage("");
 
+    if(!formData.email) {
+      setErrorMessage("Email Required") 
+    }
+    if(!formData.password) {
+      setErrorMessage("Password Required") 
+    }
+
     try {
       const response = await login(formData).unwrap(); // Call the login mutation
       if (response?.status === true) {
