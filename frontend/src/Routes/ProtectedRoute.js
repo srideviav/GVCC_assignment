@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import IsSessionExpired from "../const/session";
 

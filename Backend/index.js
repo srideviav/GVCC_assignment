@@ -7,13 +7,23 @@ const app = express();
 const DB_URL = process.env.DB_URL; 
 const PORT = process.env.PORT;
 
-app.use(cors(
-/*{
-  origin: 'http://localhost:3000',  
-  methods: 'GET,POST,PUT,DELETE',  
-  allowedHeaders: 'Content-Type,Authorization',  
-}*/
-));
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://gvcc-assignment.vercel.app',
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+       callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+}));
+
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 app.use("/user",UserRoutes);
